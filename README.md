@@ -6,6 +6,7 @@ A high-performance, **zero-dependency** Dart utility to transform large numbers 
 
 * 🇮🇳 **Indian System:** Smart conversion to Lakhs (L) and Crores (Cr).
 * 🌍 **International System:** Standard Millions (M), Billions (B), and Trillions (T).
+* 💰 **Currency Formatting:** Built-in comma separation (e.g., 1,00,000 or 100,000) with optional symbols (`₹`, `$`).
 * 👥 **Plurality Support:** Automatically handles "Lakh" vs "Lakhs" and "Crore" vs "Crores".
 * 🏅 **Ordinals:** Built-in extension for ordinal suffixes (1st, 2nd, 3rd).
 * ⚡ **Pure Dart:** No Flutter dependency. Use it in Flutter, AngularDart, or Server-side Dart.
@@ -40,7 +41,7 @@ print(22.toOrdinal()); // "22nd"
 ```
 
 
-### Comma Separated Numbers
+### Currency / Comma Formatting
 
 ```dart
 // Indian System Commas (Default)
