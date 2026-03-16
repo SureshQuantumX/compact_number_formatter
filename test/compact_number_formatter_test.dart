@@ -16,7 +16,7 @@ void main() {
     // Negative numbers
     expect((-150000).toCompact(), '-1.5 L');
     expect((-1200000).toCompact(system: CompactSystem.international), '-1.2 M');
-    expect((-5.02).toCompact(decimal: 2), '-5.01');
+    expect((-5.02).toCompact(decimal: 2), '-5.02');
     expect((-5.02).toCompact(decimal: 2, roundOff: true), '-5.02');
 
     // roundOff: false (truncate)

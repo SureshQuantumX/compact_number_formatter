@@ -178,10 +178,37 @@ extension CompactNum on num {
     if (roundOff) {
       return value.toStringAsFixed(decimal);
     }
-    // Truncate by shifting decimal point, truncating to int, then shifting back
-    final factor = _pow10(decimal);
-    final truncated = (value * factor).toInt() / factor;
-    return truncated.toStringAsFixed(decimal);
+    
+    // Convert to string to prevent floating-point multiplication precision loss
+    String str = value.toString();
+    
+    // Fallback to math-based truncation if it uses scientific notation 
+    if (str.contains('e')) {
+      final factor = _pow10(decimal);
+      final double epsilon = value < 0 ? -1e-12 : 1e-12;
+      final truncated = ((value * factor) + epsilon).toInt() / factor;
+      return truncated.toStringAsFixed(decimal);
+    }
+    
+    int dotIndex = str.indexOf('.');
+    if (dotIndex == -1) {
+      return value.toStringAsFixed(decimal);
+    }
+    
+    int endIndex = decimal == 0 ? dotIndex : dotIndex + 1 + decimal;
+    
+    if (endIndex <= str.length) {
+      String truncated = str.substring(0, endIndex);
+      if (decimal > 0 && truncated.length < endIndex) {
+        truncated = truncated.padRight(endIndex, '0');
+      }
+      return truncated;
+    }
+    
+    if (decimal > 0) {
+       return str.padRight(endIndex, '0');
+    }
+    return str;
   }
 
   int _pow10(int exp) {
