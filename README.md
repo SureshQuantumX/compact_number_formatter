@@ -2,6 +2,16 @@
 
 A high-performance, **zero-dependency** Dart utility to transform large numbers into human-readable compact formats. Supports both the **Indian Numbering System (Lakh/Crore)** and the **International System (Million/Billion/Trillion)** with currency formatting, ordinals, and global configuration.
 
+## 📸 Screenshots
+
+| Indian System | International System | Currency Format |
+| :---: | :---: | :---: |
+| <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/indian-format.png" width="200"/> | <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/international-format.png" width="200"/> | <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/currency-format.png" width="200"/> |
+
+| Rounding & Truncate | Negative Numbers | Prefixes |
+| :---: | :---: | :---: |
+| <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/rounding-truncate.png" width="200"/> | <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/negative-numbers.png" width="200"/> | <img src="https://raw.githubusercontent.com/SureshQuantumX/compact_number_formatter/main/lib/screenshots/prefix.png" width="200"/> |
+
 ## 🚀 Key Features
 
 * 🇮🇳 **Indian System:** Smart conversion to Lakhs (L) and Crores (Cr).
