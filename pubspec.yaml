@@ -1,10 +1,23 @@
 name: compact_number_formatter
 description: Zero-dependency formatter for Indian (Lakh/Crore) and International (Million/Billion) number systems with ordinal support.
 version: 1.0.0
+repository: https://github.com/SureshQuantumX/compact_number_formatter.git
+
 # No dependencies needed here!
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
+
 dev_dependencies:
   test: ^1.24.0
   lints: ^3.0.0
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+license: MIT
