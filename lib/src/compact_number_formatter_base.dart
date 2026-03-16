@@ -18,44 +18,44 @@ enum CompactSystem { indian, international }
 class CompactNumberConfig {
   static CompactSystem? _system;
   static CompactFormat? _format;
-  static int? _decimal;
+  static int? _compactDecimal;
+  static int? _currencyDecimal;
   static bool? _roundOff;
   static String? _symbol;
-  static int? _decimalDigits;
 
   /// Set global defaults. Only provided values are changed.
   static void set({
     CompactSystem? system,
     CompactFormat? format,
-    int? decimal,
+    int? compactDecimal,
+    int? currencyDecimal,
     bool? roundOff,
     String? symbol,
-    int? decimalDigits,
   }) {
     if (system != null) _system = system;
     if (format != null) _format = format;
-    if (decimal != null) _decimal = decimal;
+    if (compactDecimal != null) _compactDecimal = compactDecimal;
+    if (currencyDecimal != null) _currencyDecimal = currencyDecimal;
     if (roundOff != null) _roundOff = roundOff;
     if (symbol != null) _symbol = symbol;
-    if (decimalDigits != null) _decimalDigits = decimalDigits;
   }
 
   /// Reset all global defaults.
   static void reset() {
     _system = null;
     _format = null;
-    _decimal = null;
+    _compactDecimal = null;
+    _currencyDecimal = null;
     _roundOff = null;
     _symbol = null;
-    _decimalDigits = null;
   }
 
   static CompactSystem get system => _system ?? CompactSystem.indian;
   static CompactFormat get format => _format ?? CompactFormat.short;
-  static int get decimal => _decimal ?? 1;
+  static int get compactDecimal => _compactDecimal ?? 1;
+  static int get currencyDecimal => _currencyDecimal ?? 2;
   static bool get roundOff => _roundOff ?? true;
   static String get symbol => _symbol ?? '';
-  static int get decimalDigits => _decimalDigits ?? 2;
 }
 
 extension CompactNum on num {
@@ -77,7 +77,7 @@ extension CompactNum on num {
   }) {
     final s = system ?? CompactNumberConfig.system;
     final f = format ?? CompactNumberConfig.format;
-    final d = decimal ?? CompactNumberConfig.decimal;
+    final d = decimal ?? CompactNumberConfig.compactDecimal;
     final r = roundOff ?? CompactNumberConfig.roundOff;
     final sym = symbol ?? CompactNumberConfig.symbol;
 
@@ -113,18 +113,18 @@ extension CompactNum on num {
   /// Formats the number with comma separators.
   ///
   /// [system] - Choose between [CompactSystem.indian] (1,00,000) or [CompactSystem.international] (100,000).
-  /// [decimalDigits] - Number of decimal digits to display (default is 2).
+  /// [decimal] - Number of decimal places (default is 2).
   /// [symbol] - Optional prefix symbol (e.g., '₹', '$').
   /// All parameters fall back to [CompactNumberConfig] globals if not provided.
   String toCurrencyFormat({
     CompactSystem? system,
-    int? decimalDigits,
+    int? decimal,
     String? symbol,
   }) {
     final system_ = system ?? CompactNumberConfig.system;
-    final decimalDigits_ = decimalDigits ?? CompactNumberConfig.decimalDigits;
+    final decimal_ = decimal ?? CompactNumberConfig.currencyDecimal;
     final symbol_ = symbol ?? CompactNumberConfig.symbol;
-    String numStr = toStringAsFixed(decimalDigits_);
+    String numStr = toStringAsFixed(decimal_);
     List<String> parts = numStr.split('.');
     String intPart = parts[0];
     String decPart = parts.length > 1 ? '.${parts[1]}' : '';
@@ -220,7 +220,8 @@ extension CompactNum on num {
     return _toFixed(toDouble(), decimal, roundOff);
   }
 
-  String _formatInternational(CompactFormat format, int decimal, bool roundOff) {
+  String _formatInternational(
+      CompactFormat format, int decimal, bool roundOff) {
     final String sign = this < 0 ? '-' : '';
     final num abs = this < 0 ? -this : this;
 

@@ -132,21 +132,23 @@ void main() {
     CompactNumberConfig.set(
       system: CompactSystem.international,
       symbol: '\$',
-      decimal: 2,
+      compactDecimal: 2,
+      currencyDecimal: 0,
     );
 
-    // toCompact uses global defaults
+    // toCompact uses compactDecimal
     expect(1200000.toCompact(), '\$1.20 M');
     expect(5000.toCompact(), '\$5.00 K');
     expect((-150000).toCompact(), '\$-150.00 K');
 
-    // toCurrencyFormat uses global defaults
-    expect(1234567.toCurrencyFormat(), '\$1,234,567.00');
+    // toCurrencyFormat uses currencyDecimal
+    expect(1234567.toCurrencyFormat(), '\$1,234,567');
 
     // Per-call override takes priority
     expect(150000.toCompact(system: CompactSystem.indian), '\$1.50 L');
     expect(1500.toCompact(symbol: '₹'), '₹1.50 K');
     expect(1200000.toCompact(decimal: 0), '\$1 M');
+    expect(1234567.toCurrencyFormat(decimal: 2), '\$1,234,567.00');
 
     // Reset clears all globals
     CompactNumberConfig.reset();
@@ -156,28 +158,28 @@ void main() {
 
   test('formats numbers with commas', () {
     expect(1234567.toCurrencyFormat(), '12,34,567.00');
-    expect(1234567.toCurrencyFormat(decimalDigits: 0), '12,34,567');
+    expect(1234567.toCurrencyFormat(decimal: 0), '12,34,567');
     expect(1234567.toCurrencyFormat(system: CompactSystem.international),
         '1,234,567.00');
     expect(
         1234567.toCurrencyFormat(
-            system: CompactSystem.international, decimalDigits: 0),
+            system: CompactSystem.international, decimal: 0),
         '1,234,567');
 
     // Test small numbers
-    expect(100.toCurrencyFormat(decimalDigits: 0), '100');
-    expect((-1500).toCurrencyFormat(decimalDigits: 0), '-1,500');
+    expect(100.toCurrencyFormat(decimal: 0), '100');
+    expect((-1500).toCurrencyFormat(decimal: 0), '-1,500');
     expect(
         1500.toCurrencyFormat(
-            decimalDigits: 0, system: CompactSystem.international),
+            decimal: 0, system: CompactSystem.international),
         '1,500');
 
     // Test symbol
-    expect(1234567.toCurrencyFormat(decimalDigits: 0, symbol: '₹ '),
+    expect(1234567.toCurrencyFormat(decimal: 0, symbol: '₹ '),
         '₹ 12,34,567');
     expect(
         1234567.toCurrencyFormat(
-            decimalDigits: 0,
+            decimal: 0,
             system: CompactSystem.international,
             symbol: '\$'),
         '\$1,234,567');
@@ -189,23 +191,23 @@ void main() {
     expect(0.toCurrencyFormat(symbol: '₹'), '₹0.00');
 
     // Negative with symbol
-    expect((-1500).toCurrencyFormat(decimalDigits: 0, symbol: '₹'),
+    expect((-1500).toCurrencyFormat(decimal: 0, symbol: '₹'),
         '₹-1,500');
-    expect((-100).toCurrencyFormat(decimalDigits: 0, symbol: '\$'), '\$-100');
+    expect((-100).toCurrencyFormat(decimal: 0, symbol: '\$'), '\$-100');
 
     // Large Indian numbers
-    expect(10000000.toCurrencyFormat(decimalDigits: 0), '1,00,00,000');
-    expect(100000000.toCurrencyFormat(decimalDigits: 0), '10,00,00,000');
+    expect(10000000.toCurrencyFormat(decimal: 0), '1,00,00,000');
+    expect(100000000.toCurrencyFormat(decimal: 0), '10,00,00,000');
 
     // Large International numbers
     expect(
         10000000.toCurrencyFormat(
-            decimalDigits: 0, system: CompactSystem.international),
+            decimal: 0, system: CompactSystem.international),
         '10,000,000');
 
     // Doubles
     expect(1234.567.toCurrencyFormat(), '1,234.57');
-    expect(1234.567.toCurrencyFormat(decimalDigits: 3), '1,234.567');
-    expect(0.99.toCurrencyFormat(decimalDigits: 1), '1.0');
+    expect(1234.567.toCurrencyFormat(decimal: 3), '1,234.567');
+    expect(0.99.toCurrencyFormat(decimal: 1), '1.0');
   });
 }

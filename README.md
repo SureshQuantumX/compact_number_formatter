@@ -57,7 +57,8 @@ Set defaults once instead of passing parameters every time:
 CompactNumberConfig.set(
   system: CompactSystem.international,
   symbol: '\$',
-  decimal: 2,
+  compactDecimal: 2,
+  currencyDecimal: 0,
 );
 
 // All calls now use those defaults
@@ -78,10 +79,10 @@ print(150000.toCompact()); // "1.5 L"
 | --- | --- | --- |
 | `system` | `toCompact` + `toCurrencyFormat` | `CompactSystem.indian` |
 | `format` | `toCompact` | `CompactFormat.short` |
-| `decimal` | `toCompact` | `1` |
+| `compactDecimal` | `toCompact` | `1` |
+| `currencyDecimal` | `toCurrencyFormat` | `2` |
 | `roundOff` | `toCompact` | `true` |
 | `symbol` | `toCompact` + `toCurrencyFormat` | `''` |
-| `decimalDigits` | `toCurrencyFormat` | `2` |
 
 ### Ordinal Numbers
 
@@ -99,10 +100,10 @@ print(22.toOrdinal()); // "22nd"
 print(1234567.toCurrencyFormat()); // "12,34,567.00"
 
 // International System Commas
-print(1234567.toCurrencyFormat(system: CompactSystem.international, decimalDigits: 0)); // "1,234,567"
+print(1234567.toCurrencyFormat(system: CompactSystem.international, decimal: 0)); // "1,234,567"
 
 // With Currency Symbol
-print(1500000.toCurrencyFormat(decimalDigits: 0, symbol: '₹ ')); // "₹ 15,00,000"
+print(1500000.toCurrencyFormat(decimal: 0, symbol: '₹ ')); // "₹ 15,00,000"
 
 ```
 
@@ -114,6 +115,6 @@ print(1500000.toCurrencyFormat(decimalDigits: 0, symbol: '₹ ')); // "₹ 15,00
 | --- | --- | --- | --- |
 | `system` | `CompactSystem` | `.indian` | `indian` or `international` |
 | `format` | `CompactFormat` | `.short` | `short` (L, Cr) or `long` (Lakh, Crore) |
-| `decimal` | `int` | `1` | Precision after the decimal point |
+| `decimal` | `int` | `1` (toCompact) / `2` (toCurrencyFormat) | Precision after the decimal point |
 | `roundOff` | `bool` | `true` | `true` to round, `false` to truncate |
 | `symbol` | `String` | `''` | Optional prefix symbol (e.g., `₹`, `$`) |
