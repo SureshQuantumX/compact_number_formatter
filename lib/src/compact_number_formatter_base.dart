@@ -97,31 +97,37 @@ extension CompactNum on num {
   }
 
   String _formatIndian(CompactFormat format, int decimal) {
-    if (this >= 10000000) {
-      double val = this / 10000000;
+    final String sign = this < 0 ? '-' : '';
+    final num abs = this < 0 ? -this : this;
+
+    if (abs >= 10000000) {
+      double val = abs / 10000000;
       String label = (format == CompactFormat.short)
           ? 'Cr'
           : (val == 1.0 ? 'Crore' : 'Crores');
-      return '${val.toStringAsFixed(decimal)} $label';
+      return '$sign${val.toStringAsFixed(decimal)} $label';
     }
-    if (this >= 100000) {
-      double val = this / 100000;
+    if (abs >= 100000) {
+      double val = abs / 100000;
       String label = (format == CompactFormat.short)
           ? 'L'
           : (val == 1.0 ? 'Lakh' : 'Lakhs');
-      return '${val.toStringAsFixed(decimal)} $label';
+      return '$sign${val.toStringAsFixed(decimal)} $label';
     }
-    if (this >= 1000) {
-      double val = this / 1000;
+    if (abs >= 1000) {
+      double val = abs / 1000;
       String label = (format == CompactFormat.short)
           ? 'K'
           : (val == 1.0 ? 'Thousand' : 'Thousands');
-      return '${val.toStringAsFixed(decimal)} $label';
+      return '$sign${val.toStringAsFixed(decimal)} $label';
     }
-    return toString();
+    return toStringAsFixed(decimal);
   }
 
   String _formatInternational(CompactFormat format, int decimal) {
+    final String sign = this < 0 ? '-' : '';
+    final num abs = this < 0 ? -this : this;
+
     final units = [
       {'val': 1e12, 's': 'T', 'l': 'Trillion'},
       {'val': 1e9, 's': 'B', 'l': 'Billion'},
@@ -131,14 +137,14 @@ extension CompactNum on num {
 
     for (var unit in units) {
       double divisor = unit['val'] as double;
-      if (this >= divisor) {
-        double val = this / divisor;
+      if (abs >= divisor) {
+        double val = abs / divisor;
         String label = (format == CompactFormat.short)
             ? unit['s'] as String
             : (val == 1.0 ? unit['l'] as String : '${unit['l']}s');
-        return '${val.toStringAsFixed(decimal)} $label';
+        return '$sign${val.toStringAsFixed(decimal)} $label';
       }
     }
-    return toString();
+    return toStringAsFixed(decimal);
   }
 }
