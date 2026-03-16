@@ -33,8 +33,7 @@ void main() {
 
     // Symbol prefix
     expect(150000.toCompact(symbol: '₹'), '₹1.5 L');
-    expect(
-        1200000.toCompact(symbol: '\$', system: CompactSystem.international),
+    expect(1200000.toCompact(symbol: '\$', system: CompactSystem.international),
         '\$1.2 M');
     expect(500.toCompact(decimal: 0, symbol: '₹'), '₹500');
 
@@ -64,7 +63,8 @@ void main() {
     expect(1000.toCompact(system: CompactSystem.international), '1.0 K');
     expect(1000000.toCompact(system: CompactSystem.international), '1.0 M');
     expect(1000000000.toCompact(system: CompactSystem.international), '1.0 B');
-    expect(1000000000000.toCompact(system: CompactSystem.international), '1.0 T');
+    expect(
+        1000000000000.toCompact(system: CompactSystem.international), '1.0 T');
 
     // Long format — singular vs plural
     expect(100000.toCompact(format: CompactFormat.long), '1.0 Lakh');
@@ -163,26 +163,22 @@ void main() {
     expect(1234567.toCurrencyFormat(system: CompactSystem.international),
         '1,234,567.00');
     expect(
-        1234567.toCurrencyFormat(
-            system: CompactSystem.international, decimal: 0),
+        1234567
+            .toCurrencyFormat(system: CompactSystem.international, decimal: 0),
         '1,234,567');
 
     // Test small numbers
     expect(100.toCurrencyFormat(decimal: 0), '100');
     expect((-1500).toCurrencyFormat(decimal: 0), '-1,500');
     expect(
-        1500.toCurrencyFormat(
-            decimal: 0, system: CompactSystem.international),
+        1500.toCurrencyFormat(decimal: 0, system: CompactSystem.international),
         '1,500');
 
     // Test symbol
-    expect(1234567.toCurrencyFormat(decimal: 0, symbol: '₹ '),
-        '₹ 12,34,567');
+    expect(1234567.toCurrencyFormat(decimal: 0, symbol: '₹ '), '₹ 12,34,567');
     expect(
         1234567.toCurrencyFormat(
-            decimal: 0,
-            system: CompactSystem.international,
-            symbol: '\$'),
+            decimal: 0, system: CompactSystem.international, symbol: '\$'),
         '\$1,234,567');
   });
 
@@ -192,8 +188,7 @@ void main() {
     expect(0.toCurrencyFormat(symbol: '₹'), '₹0.00');
 
     // Negative with symbol
-    expect((-1500).toCurrencyFormat(decimal: 0, symbol: '₹'),
-        '₹-1,500');
+    expect((-1500).toCurrencyFormat(decimal: 0, symbol: '₹'), '₹-1,500');
     expect((-100).toCurrencyFormat(decimal: 0, symbol: '\$'), '\$-100');
 
     // Large Indian numbers
@@ -202,8 +197,8 @@ void main() {
 
     // Large International numbers
     expect(
-        10000000.toCurrencyFormat(
-            decimal: 0, system: CompactSystem.international),
+        10000000
+            .toCurrencyFormat(decimal: 0, system: CompactSystem.international),
         '10,000,000');
 
     // Doubles
