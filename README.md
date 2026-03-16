@@ -10,7 +10,7 @@ A high-performance, **zero-dependency** Dart utility to transform large numbers 
 * 👥 **Plurality Support:** Automatically handles "Lakh" vs "Lakhs" and "Crore" vs "Crores".
 * 🏅 **Ordinals:** Built-in extension for ordinal suffixes (1st, 2nd, 3rd).
 * ➖ **Negative Numbers:** Full support for negative values.
-* 🔢 **Round Off Control:** Choose between rounding or truncation.
+* 🔢 **Round Off Control:** Truncates by default. Pass `roundOff: true` to round.
 * 💲 **Symbol Prefix:** Optional prefix symbol (e.g., `₹`, `$`) on compact numbers.
 * ⚙️ **Global Config:** Set defaults once with `CompactNumberConfig.set()` — no need to repeat params on every call.
 * ⚡ **Pure Dart:** No Flutter dependency. Use it in Flutter, AngularDart, or Server-side Dart.
@@ -42,9 +42,9 @@ print((-5.02).toCompact(decimal: 2)); // "-5.02"
 print(150000.toCompact(symbol: '₹')); // "₹1.5 L"
 print(1200000.toCompact(symbol: '\$', system: CompactSystem.international)); // "\$1.2 M"
 
-// Truncate Instead of Rounding
-print(1590.toCompact(decimal: 1, roundOff: false)); // "1.5 K"
-print(1590.toCompact(decimal: 1, roundOff: true));  // "1.6 K"
+// Truncation (default) vs Rounding
+print(1590.toCompact(decimal: 1));                  // "1.5 K" (truncated)
+print(1590.toCompact(decimal: 1, roundOff: true));  // "1.6 K" (rounded)
 
 ```
 
@@ -81,7 +81,7 @@ print(150000.toCompact()); // "1.5 L"
 | `format` | `toCompact` | `CompactFormat.short` |
 | `compactDecimal` | `toCompact` | `1` |
 | `currencyDecimal` | `toCurrencyFormat` | `2` |
-| `roundOff` | `toCompact` | `true` |
+| `roundOff` | `toCompact` | `false` |
 | `symbol` | `toCompact` + `toCurrencyFormat` | `''` |
 
 ### Ordinal Numbers
@@ -116,5 +116,5 @@ print(1500000.toCurrencyFormat(decimal: 0, symbol: '₹ ')); // "₹ 15,00,000"
 | `system` | `CompactSystem` | `.indian` | `indian` or `international` |
 | `format` | `CompactFormat` | `.short` | `short` (L, Cr) or `long` (Lakh, Crore) |
 | `decimal` | `int` | `1` (toCompact) / `2` (toCurrencyFormat) | Precision after the decimal point |
-| `roundOff` | `bool` | `true` | `true` to round, `false` to truncate |
+| `roundOff` | `bool` | `false` | `false` to truncate (default), `true` to round |
 | `symbol` | `String` | `''` | Optional prefix symbol (e.g., `₹`, `$`) |

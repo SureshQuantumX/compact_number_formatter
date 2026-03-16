@@ -54,7 +54,7 @@ class CompactNumberConfig {
   static CompactFormat get format => _format ?? CompactFormat.short;
   static int get compactDecimal => _compactDecimal ?? 1;
   static int get currencyDecimal => _currencyDecimal ?? 2;
-  static bool get roundOff => _roundOff ?? true;
+  static bool get roundOff => _roundOff ?? false;
   static String get symbol => _symbol ?? '';
 }
 

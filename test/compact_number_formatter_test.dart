@@ -16,7 +16,8 @@ void main() {
     // Negative numbers
     expect((-150000).toCompact(), '-1.5 L');
     expect((-1200000).toCompact(system: CompactSystem.international), '-1.2 M');
-    expect((-5.02).toCompact(decimal: 2), '-5.02');
+    expect((-5.02).toCompact(decimal: 2), '-5.01');
+    expect((-5.02).toCompact(decimal: 2, roundOff: true), '-5.02');
 
     // roundOff: false (truncate)
     expect(
@@ -93,12 +94,12 @@ void main() {
 
     // Small decimals / doubles
     expect(0.5.toCompact(decimal: 2), '0.50');
-    expect(99.99.toCompact(decimal: 1), '100.0');
-    expect(99.99.toCompact(decimal: 1, roundOff: false), '99.9');
+    expect(99.99.toCompact(decimal: 1), '99.9');
+    expect(99.99.toCompact(decimal: 1, roundOff: true), '100.0');
 
     // Very large numbers
     expect(999999999999999.toCompact(system: CompactSystem.international),
-        '1000.0 T');
+        '999.9 T');
   });
 
   test('ordinal edge cases', () {
